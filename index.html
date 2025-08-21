@@ -1,11 +1,1206 @@
 <!DOCTYPE html>
+
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Meraki - Anonymous Support</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Meraki - Safe Teen Community</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to bottom, #0f172a, #1e293b, #0f172a);
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-primary {
+            background: rgba(236, 72, 153, 0.9);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background: rgba(236, 72, 153, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.4);
+        }
+        
+        .btn-forum {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-forum:hover {
+            background: linear-gradient(135deg, #db2777, #7c3aed);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.4);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .nav-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-btn.active {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .post-card {
+            transition: transform 0.3s ease;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .voice-option {
+            transition: all 0.3s ease;
+        }
+        
+        .voice-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .slogan {
+            background: linear-gradient(to right, #ec4899, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        .feature-icon {
+            background: linear-gradient(to bottom right, rgba(236, 72, 153, 0.2), rgba(139, 92, 246, 0.2));
+            border-radius: 12px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .floating-forum-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: auto;
+            padding: 12px 20px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(139, 92, 246, 0.4);
+            z-index: 100;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 600;
+            gap: 8px;
+        }
+        
+        .floating-forum-btn:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 6px 25px rgba(139, 92, 246, 0.6);
+        }
+        
+        .floating-forum-btn i {
+            font-size: 18px;
+        }
+        
+        .floating-forum-btn .tooltip {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            background: rgba(15, 23, 42, 0.9);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .floating-forum-btn:hover .tooltip {
+            opacity: 1;
+        }
+        
+        .forum-icon {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        
+        .page-header {
+            position: relative;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .forum-access-panel {
+            background: linear-gradient(to right, rgba(236, 72, 153, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(236, 72, 153, 0.2);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .nav-forum-btn {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+            color: white;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .sync-notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            background: rgba(34, 197, 94, 0.9);
+            color: white;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: fadeIn 0.5s, fadeOut 0.5s 2.5s forwards;
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+<!-- Header Navigation -->
+<header class="sticky top-0 z-10 bg-slate-900/80 backdrop-blur border-b border-white/10">
+<div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-xl bg-pink-500/20 grid place-items-center">
+<span class="text-pink-400 font-black">M</span>
+</div>
+<span class="font-semibold tracking-wide">Meraki</span>
+</div>
+<nav class="hidden md:flex items-center gap-4 text-sm">
+<button class="nav-btn px-3 py-1.5 rounded-lg active" data-route="home">Home</button>
+<button class="nav-btn px-3 py-1.5 rounded-lg" data-route="features">Features</button>
+<button class="nav-btn px-3 py-1.5 rounded-lg" data-route="voices">Voices</button>
+<button class="nav-btn px-3 py-1.5 rounded-lg" data-route="about">About</button>
+<button class="nav-forum-btn" id="header-forum-btn">
+<i class="fas fa-comments mr-1"></i> Go to Forum
+                    </button>
+</nav>
+<div class="hidden md:block text-[11px] text-slate-400 truncate max-w-[260px]">
+<span id="sync-status">Multi-Device Sync: ON</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="max-w-5xl mx-auto px-4 py-10">
+<!-- Home Page (Default) -->
+<section class="page active fade-in" id="home-page">
+<div class="page-header">
+<h1 class="text-5xl md:text-6xl font-extrabold tracking-tight">
+                        Welcome to <span class="slogan">Meraki</span>
+</h1>
+<p class="mt-5 text-lg text-slate-300 max-w-2xl mx-auto">
+                        A safe, anonymous space where teenagers can share, be heard, and
+                        support each other. Your identity remains yours. Always.
+                    </p>
+<p class="mt-3 text-xl text-pink-300 font-medium">Dil Ki Baat Bina Filter</p>
+</div>
+<div class="forum-access-panel">
+<h3 class="text-xl font-semibold mb-2">Join the Conversation</h3>
+<p class="text-slate-300">Share your thoughts and connect with others in our safe community forum</p>
+<button class="cta-button btn-forum text-white" data-next="forum">
+<i class="fas fa-comments"></i> Go to Forum
+                    </button>
+</div>
+<div class="grid gap-8 place-items-center text-center mt-12">
+<button class="btn-primary px-6 py-3 rounded-2xl text-white font-semibold shadow-lg" data-next="features">
+                        Explore Features →
+                    </button>
+</div>
+</section>
+<!-- Features Page -->
+<section class="page hidden max-w-3xl mx-auto" id="features-page">
+<div class="page-header">
+<h2 class="text-3xl font-bold mb-2">Key Features</h2>
+<p class="text-slate-300">Discover what makes Meraki a safe space for teens</p>
+</div>
+<div class="forum-access-panel">
+<h3 class="text-xl font-semibold mb-2">Ready to Connect?</h3>
+<p class="text-slate-300">Join our community forum to share and support others</p>
+<button class="cta-button btn-forum text-white" data-next="forum">
+<i class="fas fa-comments"></i> Go to Forum
+                    </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="card p-4">
+<div class="feature-icon">
+<span>👤</span>
+</div>
+<div class="font-semibold">Anonymous profiles</div>
+<div class="text-slate-300 text-sm mt-1">No real names. You control what you share.</div>
+</div>
+<div class="card p-4">
+<div class="feature-icon">
+<span>🤖</span>
+</div>
+<div class="font-semibold">AI moderation</div>
+<div class="text-slate-300 text-sm mt-1">Keyword filtering helps block abuse.</div>
+</div>
+<div class="card p-4">
+<div class="feature-icon">
+<span>🔊</span>
+</div>
+<div class="font-semibold">Customizable voices</div>
+<div class="text-slate-300 text-sm mt-1">Comforting voices using your device's TTS.</div>
+</div>
+<div class="card p-4">
+<div class="feature-icon">
+<span>🔑</span>
+</div>
+<div class="font-semibold">Delete key control</div>
+<div class="text-slate-300 text-sm mt-1">Delete your content with your private key.</div>
+</div>
+<div class="card p-4">
+<div class="feature-icon">
+<span>🔄</span>
+</div>
+<div class="font-semibold">Multi-device sync</div>
+<div class="text-slate-300 text-sm mt-1">Posts visible across all your devices.</div>
+</div>
+<div class="card p-4">
+<div class="feature-icon">
+<span>💝</span>
+</div>
+<div class="font-semibold">Trust system (concept)</div>
+<div class="text-slate-300 text-sm mt-1">Coming later to highlight supportive users.</div>
+</div>
+</div>
+<div class="flex gap-3 mt-8">
+<button class="btn-secondary px-4 py-2 rounded-xl" data-prev="home">
+                        ← Previous
+                    </button>
+<button class="btn-primary px-4 py-2 rounded-xl" data-next="voices">
+                        Next →
+                    </button>
+</div>
+</section>
+<!-- Voice Select Page -->
+
+<section class="page active fade-in max-w-3xl mx-auto" id="voices-page">
+<div class="page-header">
+<h2 class="text-3xl font-bold mb-2">Choose a Comforting Voice</h2>
+<p class="text-slate-300 mb-4">
+            Handpicked English voices from your system that sound supportive.
+        </p>
+</div>
+<div class="forum-access-panel">
+<h3 class="text-xl font-semibold mb-2">Want to share your thoughts?</h3>
+<p class="text-slate-300">Our community forum is ready for you to join the conversation</p>
+<button class="cta-button btn-forum text-white" data-next="forum">
+<i class="fas fa-comments"></i> Go to Forum
+        </button>
+</div>
+<div class="card p-4 mb-4">
+<label class="block mb-2">
+<span class="text-sm text-slate-300">Sample phrase</span>
+<input class="w-full mt-1 px-3 py-2 rounded-xl bg-slate-900 border border-white/10 outline-none" id="voice-sample" value="Hey! You are safe here. Take a breath. You matter."/>
+</label>
+</div>
+<div class="grid gap-4" id="voices-container">
+<!-- Voices will be populated by JavaScript -->
+</div>
+<div class="flex gap-3 mt-8">
+<button class="btn-secondary px-4 py-2 rounded-xl" data-prev="features">
+            ← Previous
+        </button>
+<button class="btn-primary px-4 py-2 rounded-xl" data-next="about">
+            Next →
+        </button>
+</div>
+</section>
+
+<!-- About Page -->
+<section class="page hidden max-w-3xl mx-auto" id="about-page">
+<div class="page-header">
+<h2 class="text-3xl font-bold mb-4">What is Meraki?</h2>
+</div>
+<div class="forum-access-panel">
+<h3 class="text-xl font-semibold mb-2">Join our supportive community</h3>
+<p class="text-slate-300">Share your experiences and connect with others in our safe space</p>
+<button class="cta-button btn-forum text-white" data-next="forum">
+<i class="fas fa-comments"></i> Go to Forum
+                    </button>
+</div>
+<p class="text-slate-300 leading-7">
+                    Meraki is a safe, anonymous teen community focused on kindness and
+                    support. There are no real names or IDs. Share what you feel, reply to
+                    others, and choose a comforting voice to hear supportive messages.
+                    AI-powered keyword filtering reduces harmful content, and a private
+                    delete key gives you total control over your posts across devices.
+                </p>
+<div class="flex gap-3 mt-8">
+<button class="btn-secondary px-4 py-2 rounded-xl" data-prev="voices">
+                        ← Previous
+                    </button>
+</div>
+</section>
+<!-- Forum Page -->
+<section class="page hidden max-w-4xl mx-auto" id="forum-page">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-3xl font-bold">Community Wall</h2>
+<span class="text-xs px-2 py-1 rounded-lg border border-green-500/40 text-green-400">
+                        Multi-Device Sync: ON
+                    </span>
+</div>
+<div class="card p-4 mb-6">
+<textarea class="w-full min-h-[100px] px-3 py-2 rounded-xl bg-slate-900 border border-white/10 outline-none" id="new-post-text" placeholder="Share something. You are anonymous here. Be kind."></textarea>
+<div class="text-pink-300 text-sm mt-2 hidden" id="post-error"></div>
+<div class="mt-3 flex items-center gap-3">
+<button class="btn-primary px-4 py-2 rounded-xl" id="submit-post">Post</button>
+<button class="btn-secondary px-3 py-2 rounded-xl" id="refresh-posts">
+<i class="fas fa-sync-alt mr-1"></i> Refresh
+                        </button>
+<div class="ml-auto">
+<button class="btn-secondary px-3 py-2 rounded-xl text-xs" id="delete-key-btn">
+                                Delete Key
+                            </button>
+</div>
+</div>
+</div>
+<div class="grid gap-4" id="forum-posts">
+<!-- Posts will be loaded here -->
+</div>
+</section>
+</main>
+<!-- Floating Forum Access Button -->
+<div class="floating-forum-btn" id="forum-shortcut">
+<i class="fas fa-comments"></i> Go to Forum
+            <div class="tooltip">Join the conversation</div>
+</div>
+<!-- Delete Key Modal -->
+<div class="fixed inset-0 bg-black/70 flex items-center justify-center z-50 hidden" id="delete-key-modal">
+<div class="card p-6 max-w-md w-full mx-4">
+<h3 class="text-xl font-bold mb-4">Delete Key Manager</h3>
+<div class="mb-4">
+<label class="block text-sm text-slate-300 mb-2">Current Status:</label>
+<div class="text-sm p-2 rounded bg-slate-800" id="key-status"></div>
+</div>
+<div class="mb-4">
+<label class="block text-sm text-slate-300 mb-2">Set/Update Delete Key</label>
+<input class="w-full px-3 py-2 rounded-xl bg-slate-900 border border-white/10 outline-none" id="delete-key-input" placeholder="Enter your private delete key" type="password"/>
+</div>
+<div class="text-sm text-slate-400 mb-4" id="key-message"></div>
+<div class="flex gap-3 justify-end">
+<button class="btn-secondary px-4 py-2 rounded-xl" id="cancel-key">Cancel</button>
+<button class="btn-primary px-4 py-2 rounded-xl" id="save-key">Save</button>
+</div>
+</div>
+</div>
+<!-- Footer -->
+
+<!-- Voice Preview -->
+<div class="fixed right-4 bottom-24 w-[min(420px,calc(100%-2rem))] md:w-[420px]">
+<div class="rounded-2xl border border-white/10 bg-slate-900/80 backdrop-blur p-4 shadow-xl">
+<div class="text-sm text-slate-300 mb-2">Voice Preview</div>
+<textarea class="w-full px-3 py-2 rounded-xl bg-slate-950 border border-white/10 outline-none min-h-[80px]" id="voice-preview-text">If you're reading this, you're already doing something brave. Proud of you.</textarea>
+<div class="mt-2 flex items-center justify-between">
+<div class="text-[11px] text-slate-400 truncate" id="selected-voice-info">
+        No voice selected
+      </div>
+<button class="btn-secondary px-3 py-1.5 text-xs rounded-lg" id="speak-preview-btn">
+        Speak
+      </button>
+</div>
+</div>
+</div>
+<footer class="max-w-5xl mx-auto px-4 py-8 text-xs text-slate-400">
+            Made with care for teens. Privacy-first. No real names. ✨
+        </footer>
+</div>
+<script>
+        // Data storage functions with multi-device simulation
+        const Storage = {
+            // Generate a unique user ID that persists across sessions
+            getUserId() {
+                let userId = localStorage.getItem('meraki-user-id');
+                if (!userId) {
+                    userId = 'user-' + Math.random().toString(36).substring(2, 12);
+                    localStorage.setItem('meraki-user-id', userId);
+                }
+                return userId;
+            },
+            
+            // Get all posts from localStorage
+            getPosts() {
+                const posts = localStorage.getItem('meraki-posts');
+                return posts ? JSON.parse(posts) : [];
+            },
+            
+            // Save posts to localStorage and "sync" to other devices
+            savePosts(posts) {
+                localStorage.setItem('meraki-posts', JSON.stringify(posts));
+                localStorage.setItem('meraki-last-update', Date.now().toString());
+                
+                // Simulate syncing to other devices by storing in a shared key
+                // This is a simulation - in a real app, you would use a backend
+                this.simulateMultiDeviceSync(posts);
+            },
+            
+            // Simulate multi-device sync by using a shared storage mechanism
+            simulateMultiDeviceSync(posts) {
+                // In a real app, this would be an API call to a backend
+                // For this demo, we'll use a special localStorage key that represents the "cloud"
+                const cloudData = {
+                    posts: posts,
+                    lastUpdated: Date.now(),
+                    updatedBy: this.getUserId()
+                };
+                
+                localStorage.setItem('meraki-cloud-posts', JSON.stringify(cloudData));
+                
+                // Show sync notification
+                this.showSyncNotification();
+            },
+            
+            // Check for updates from other devices
+            checkForUpdates() {
+                const cloudData = localStorage.getItem('meraki-cloud-posts');
+                if (!cloudData) return false;
+                
+                const cloudPosts = JSON.parse(cloudData);
+                const localPosts = this.getPosts();
+                const localLastUpdate = localStorage.getItem('meraki-last-update');
+                
+                // If cloud has newer data, update local storage
+                if (cloudPosts.lastUpdated > parseInt(localLastUpdate || 0)) {
+                    this.savePosts(cloudPosts.posts);
+                    return true;
+                }
+                
+                return false;
+            },
+            
+            // Show sync notification
+            showSyncNotification() {
+                // Remove any existing notification
+                const existingNote = document.getElementById('sync-notification');
+                if (existingNote) existingNote.remove();
+                
+                // Create new notification
+                const notification = document.createElement('div');
+                notification.id = 'sync-notification';
+                notification.className = 'sync-notification';
+                notification.innerHTML = `
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <span>Synced across all devices</span>
+                `;
+                
+                document.body.appendChild(notification);
+                
+                // Remove after animation completes
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 3000);
+            },
+            
+            getDeleteKeyHash() {
+                return localStorage.getItem('meraki-delete-key');
+            },
+            
+            saveDeleteKeyHash(hash) {
+                localStorage.setItem('meraki-delete-key', hash);
+            },
+            
+            getSelectedVoice() {
+                return localStorage.getItem('meraki-selected-voice');
+            },
+            
+            saveSelectedVoice(voiceURI) {
+                localStorage.setItem('meraki-selected-voice', voiceURI);
+            }
+        };
+
+        // Utility functions
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substring(2);
+        }
+
+        function formatTime(timestamp) {
+            const now = new Date();
+            const postTime = new Date(timestamp);
+            const diffInMinutes = Math.floor((now - postTime) / (1000 * 60));
+            
+            if (diffInMinutes < 1) return "Just now";
+            if (diffInMinutes < 60) return `${diffInMinutes}m ago`;
+            
+            const diffInHours = Math.floor(diffInMinutes / 60);
+            if (diffInHours < 24) return `${diffInHours}h ago`;
+            
+            const diffInDays = Math.floor(diffInHours / 24);
+            if (diffInDays < 7) return `${diffInDays}d ago`;
+            
+            return postTime.toLocaleDateString();
+        }
+
+        // Simple hash function for demo purposes
+        function simpleHash(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = ((hash << 5) - hash) + str.charCodeAt(i);
+                hash |= 0; // Convert to 32bit integer
+            }
+            return hash.toString();
+        }
+
+        // Forum functionality
+        const Forum = {
+            posts: [],
+            
+            init() {
+                // Check for updates from other devices first
+                if (Storage.checkForUpdates()) {
+                    console.log("Updated from other device");
+                }
+                
+                this.posts = Storage.getPosts();
+                this.renderPosts();
+                
+                // Set up periodic checking for updates
+                setInterval(() => {
+                    if (Storage.checkForUpdates()) {
+                        this.posts = Storage.getPosts();
+                        this.renderPosts();
+                    }
+                }, 10000); // Check every 10 seconds
+                
+                // Event listeners
+                document.getElementById('submit-post').addEventListener('click', () => this.addPost());
+                document.getElementById('refresh-posts').addEventListener('click', () => this.manualRefresh());
+                document.getElementById('new-post-text').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter' && e.ctrlKey) this.addPost();
+                });
+            },
+            
+            manualRefresh() {
+                const refreshBtn = document.getElementById('refresh-posts');
+                refreshBtn.innerHTML = '<i class="fas fa-sync-alt fa-spin mr-1"></i> Refreshing';
+                
+                // Check for updates
+                if (Storage.checkForUpdates()) {
+                    this.posts = Storage.getPosts();
+                    this.renderPosts();
+                }
+                
+                setTimeout(() => {
+                    refreshBtn.innerHTML = '<i class="fas fa-sync-alt mr-1"></i> Refresh';
+                }, 1000);
+            },
+            
+            addPost() {
+                const textarea = document.getElementById('new-post-text');
+                const errorDiv = document.getElementById('post-error');
+                const text = textarea.value.trim();
+                
+                if (!text) {
+                    errorDiv.textContent = "Please write something to post.";
+                    errorDiv.classList.remove('hidden');
+                    textarea.classList.add('shake');
+                    setTimeout(() => textarea.classList.remove('shake'), 500);
+                    return;
+                }
+                
+                // Check if delete key is set
+                if (!Storage.getDeleteKeyHash()) {
+                    errorDiv.textContent = "Please set a delete key first.";
+                    errorDiv.classList.remove('hidden');
+                    document.getElementById('delete-key-btn').classList.add('shake');
+                    setTimeout(() => document.getElementById('delete-key-btn').classList.remove('shake'), 500);
+                    return;
+                }
+                
+                errorDiv.classList.add('hidden');
+                
+                const newPost = {
+                    id: generateId(),
+                    text: text,
+                    timestamp: new Date().toISOString(),
+                    deleteKeyHash: Storage.getDeleteKeyHash(),
+                    replies: [],
+                    userId: Storage.getUserId()
+                };
+                
+                this.posts.unshift(newPost);
+                Storage.savePosts(this.posts);
+                
+                textarea.value = '';
+                this.renderPosts();
+                
+                // Show confirmation
+                const submitBtn = document.getElementById('submit-post');
+                submitBtn.textContent = "Posted!";
+                submitBtn.classList.add('bg-green-500');
+                setTimeout(() => {
+                    submitBtn.textContent = "Post";
+                    submitBtn.classList.remove('bg-green-500');
+                }, 2000);
+            },
+            
+            addReply(postId, replyText) {
+                const post = this.posts.find(p => p.id === postId);
+                if (!post) return;
+                
+                const newReply = {
+                    id: generateId(),
+                    text: replyText,
+                    timestamp: new Date().toISOString(),
+                    deleteKeyHash: Storage.getDeleteKeyHash(),
+                    userId: Storage.getUserId()
+                };
+                
+                post.replies.push(newReply);
+                Storage.savePosts(this.posts);
+                this.renderPosts();
+            },
+            
+            deletePost(postId) {
+                const deleteKey = prompt("Enter your delete key to confirm deletion:");
+                if (!deleteKey) return;
+                
+                const deleteKeyHash = simpleHash(deleteKey);
+                const post = this.posts.find(p => p.id === postId);
+                
+                if (!post || post.deleteKeyHash !== deleteKeyHash) {
+                    alert("Incorrect delete key. Deletion failed.");
+                    return;
+                }
+                
+                this.posts = this.posts.filter(p => p.id !== postId);
+                Storage.savePosts(this.posts);
+                this.renderPosts();
+            },
+            
+            deleteReply(postId, replyId) {
+                const deleteKey = prompt("Enter your delete key to confirm deletion:");
+                if (!deleteKey) return;
+                
+                const deleteKeyHash = simpleHash(deleteKey);
+                const post = this.posts.find(p => p.id === postId);
+                if (!post) return;
+                
+                const reply = post.replies.find(r => r.id === replyId);
+                if (!reply || reply.deleteKeyHash !== deleteKeyHash) {
+                    alert("Incorrect delete key. Deletion failed.");
+                    return;
+                }
+                
+                post.replies = post.replies.filter(r => r.id !== replyId);
+                Storage.savePosts(this.posts);
+                this.renderPosts();
+            },
+            
+            renderPosts() {
+                const container = document.getElementById('forum-posts');
+                
+                if (this.posts.length === 0) {
+                    container.innerHTML = `
+                        <div class="text-center py-10 text-slate-400">
+                            <i class="fas fa-comments text-4xl mb-3"></i>
+                            <p>No posts yet. Be the first to share something!</p>
+                            <p class="text-sm mt-2">Posts will sync across all your devices</p>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                container.innerHTML = this.posts.map(post => `
+                    <div class="post-card card p-4 fade-in">
+                        <div class="flex items-start gap-3">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-pink-500/40 to-purple-500/40 grid place-items-center">
+                                <span class="text-xs">👤</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="whitespace-pre-wrap leading-7">${post.text}</div>
+                                <div class="text-[11px] text-slate-400 mt-2">${formatTime(post.timestamp)}</div>
+                            </div>
+                            <button class="delete-post-btn btn-secondary px-2 py-1 text-xs rounded-lg" data-post-id="${post.id}">
+                                Delete
+                            </button>
+                        </div>
+                        
+                        <div class="mt-3 ml-11 grid gap-2">
+                            ${post.replies.map(reply => `
+                                <div class="flex items-start gap-3">
+                                    <div class="w-7 h-7 rounded-full bg-slate-700 grid place-items-center text-[11px]">
+                                        💬
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="whitespace-pre-wrap leading-7 text-slate-200">${reply.text}</div>
+                                        <div class="text-[11px] text-slate-400 mt-1">${formatTime(reply.timestamp)}</div>
+                                    </div>
+                                    <button class="delete-reply-btn btn-secondary px-2 py-1 text-[11px] rounded-lg" 
+                                            data-post-id="${post.id}" data-reply-id="${reply.id}">
+                                        Delete
+                                    </button>
+                                </div>
+                            `).join('')}
+                            
+                            <div class="flex items-start gap-2 mt-2">
+                                <input class="reply-input flex-1 px-3 py-2 rounded-xl bg-slate-900 border border-white/10 outline-none" 
+                                       placeholder="Reply with kindness" data-post-id="${post.id}">
+                                <button class="reply-btn btn-secondary px-3 py-2 rounded-xl" data-post-id="${post.id}">
+                                    Reply
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                
+                // Add event listeners
+                document.querySelectorAll('.delete-post-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.deletePost(btn.dataset.postId);
+                    });
+                });
+                
+                document.querySelectorAll('.delete-reply-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        this.deleteReply(btn.dataset.postId, btn.dataset.replyId);
+                    });
+                });
+                
+                document.querySelectorAll('.reply-btn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const input = document.querySelector(`.reply-input[data-post-id="${btn.dataset.postId}"]`);
+                        const text = input.value.trim();
+                        if (text) {
+                            this.addReply(btn.dataset.postId, text);
+                            input.value = '';
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('.reply-input').forEach(input => {
+                    input.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            const text = input.value.trim();
+                            if (text) {
+                                this.addReply(input.dataset.postId, text);
+                                input.value = '';
+                            }
+                        }
+                    });
+                });
+            }
+        };
+
+        // Voice functionality
+        
+const VoiceManager = {
+    selectedVoice: null,
+    availableVoices: [],
+    isSpeaking: false,
+    
+    init() {
+        this.loadAvailableVoices();
+        this.setupEventListeners();
+        this.renderVoices();
+    },
+    
+    loadAvailableVoices() {
+        // These are common system voices that work across different devices
+        this.availableVoices = [
+            { name: 'Samantha', lang: 'en-US', type: 'female' },
+            { name: 'Daniel', lang: 'en-GB', type: 'male' },
+            { name: 'Karen', lang: 'en-AU', type: 'female' },
+            { name: 'Moira', lang: 'en-IE', type: 'female' },
+            { name: 'Tessa', lang: 'en-ZA', type: 'female' },
+            { name: 'Veena', lang: 'en-IN', type: 'female' },
+            { name: 'Fred', lang: 'en-US', type: 'male' },
+            { name: 'Alex', lang: 'en-US', type: 'male' }
+        ];
+    },
+    
+    setupEventListeners() {
+        // Update sample text for all voices when input changes
+        const sampleInput = document.getElementById('voice-sample');
+        if (sampleInput) {
+            sampleInput.addEventListener('input', (e) => {
+                this.updateAllVoiceSamples(e.target.value);
+            });
+        }
+        
+        // Speak preview text
+        const previewBtn = document.getElementById('speak-preview-btn');
+        if (previewBtn) {
+            previewBtn.addEventListener('click', () => {
+                this.speakPreview();
+            });
+        }
+    },
+    
+    updateAllVoiceSamples(sampleText) {
+        document.querySelectorAll('.listen-btn').forEach(btn => {
+            btn.dataset.sample = sampleText;
+        });
+    },
+    
+    renderVoices() {
+        const container = document.getElementById('voices-container');
+        if (!container) return;
+        const sampleText = document.getElementById('voice-sample') ? document.getElementById('voice-sample').value : 'Hey! You are safe here. Take a breath. You matter.';
+        
+        container.innerHTML = this.availableVoices.map(voice => `
+            <div class="voice-option card p-4 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full ${voice.type === 'male' ? 'bg-blue-500/20' : 'bg-pink-500/20'} grid place-items-center">
+                        <i class="fas ${voice.type === 'male' ? 'fa-male' : 'fa-female'} ${voice.type === 'male' ? 'text-blue-400' : 'text-pink-400'}"></i>
+                    </div>
+                    <div class="text-sm">
+                        <div class="font-medium">${voice.name}</div>
+                        <div class="text-slate-400">${voice.lang} • ${voice.type}</div>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button class="select-voice-btn ${this.selectedVoice === voice.name ? 'btn-primary' : 'btn-secondary'} 
+                            px-3 py-1.5 text-xs rounded-lg" data-voice="${voice.name}">
+                        ${this.selectedVoice === voice.name ? 'Selected' : 'Select'}
+                    </button>
+                    <button class="listen-btn btn-secondary px-3 py-1.5 text-xs rounded-lg" 
+                            data-sample="${sampleText}" data-voice="${voice.name}">
+                        Listen
+                    </button>
+                </div>
+            </div>
+        `).join('');
+        
+        // Add event listeners to the new buttons
+        this.addVoiceEventListeners();
+    },
+    
+    addVoiceEventListeners() {
+        document.querySelectorAll('.select-voice-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.selectVoice(btn.dataset.voice);
+            });
+        });
+        
+        document.querySelectorAll('.listen-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                this.speakSample(btn.dataset.sample, btn.dataset.voice);
+                btn.classList.add('voice-playing');
+                setTimeout(() => {
+                    btn.classList.remove('voice-playing');
+                }, 1500);
+            });
+        });
+    },
+    
+    selectVoice(voiceName) {
+        this.selectedVoice = voiceName;
+        this.renderVoices();
+        
+        const selectedVoice = this.availableVoices.find(v => v.name === voiceName);
+        if (selectedVoice) {
+            const info = document.getElementById('selected-voice-info');
+            if (info) {
+                info.textContent = `${selectedVoice.name} • ${selectedVoice.lang} • ${selectedVoice.type}`;
+            }
+        }
+        
+        this.speakText(`Selected ${voiceName} voice`);
+    },
+    
+    speakSample(sampleText, voiceName) {
+        const voice = this.availableVoices.find(v => v.name === voiceName);
+        if (voice) {
+            this.speakText(sampleText, voice);
+        }
+    },
+    
+    speakPreview() {
+        const textArea = document.getElementById('voice-preview-text');
+        const text = textArea ? textArea.value : '';
+        if (this.selectedVoice) {
+            const voice = this.availableVoices.find(v => v.name === this.selectedVoice);
+            this.speakText(text, voice);
+        } else {
+            this.speakText(text);
+        }
+    },
+    
+    speakText(text, voiceInfo = null) {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            if (voiceInfo) {
+                utterance.rate = voiceInfo.type === 'male' ? 0.95 : 1.0;
+                utterance.pitch = voiceInfo.type === 'male' ? 1.0 : 1.1;
+            } else {
+                utterance.rate = 1.0;
+                utterance.pitch = 1.05;
+            }
+            utterance.volume = 0.9;
+            
+            const voices = speechSynthesis.getVoices();
+            if (voiceInfo && voices.length > 0) {
+                const matchedVoice = voices.find(v => 
+                    v.name.includes(voiceInfo.name) || 
+                    v.lang.includes(voiceInfo.lang)
+                );
+                if (matchedVoice) {
+                    utterance.voice = matchedVoice;
+                }
+            }
+            window.speechSynthesis.speak(utterance);
+        } else {
+            alert("Your browser doesn't support text-to-speech functionality.");
+        }
+    }
+};
+
+
+        // Delete Key Manager
+        const DeleteKeyManager = {
+            init() {
+                this.updateKeyStatus();
+                
+                // Event listeners
+                document.getElementById('delete-key-btn').addEventListener('click', () => {
+                    this.showModal();
+                });
+                
+                document.getElementById('cancel-key').addEventListener('click', () => {
+                    this.hideModal();
+                });
+                
+                document.getElementById('save-key').addEventListener('click', () => {
+                    this.saveKey();
+                });
+                
+                document.getElementById('delete-key-input').addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') this.saveKey();
+                });
+            },
+            
+            showModal() {
+                document.getElementById('delete-key-modal').classList.remove('hidden');
+            },
+            
+            hideModal() {
+                document.getElementById('delete-key-modal').classList.add('hidden');
+            },
+            
+            updateKeyStatus() {
+                const statusDiv = document.getElementById('key-status');
+                const keyHash = Storage.getDeleteKeyHash();
+                
+                if (keyHash) {
+                    statusDiv.innerHTML = '<span class="text-green-400">✓ Delete key is set</span>';
+                } else {
+                    statusDiv.innerHTML = '<span class="text-yellow-400">⚠ No delete key set</span>';
+                }
+            },
+            
+            saveKey() {
+                const input = document.getElementById('delete-key-input');
+                const messageDiv = document.getElementById('key-message');
+                const key = input.value.trim();
+                
+                if (!key) {
+                    messageDiv.textContent = "Please enter a delete key.";
+                    return;
+                }
+                
+                if (key.length < 4) {
+                    messageDiv.textContent = "Delete key should be at least 4 characters.";
+                    return;
+                }
+                
+                // Save the hash of the key
+                const keyHash = simpleHash(key);
+                Storage.saveDeleteKeyHash(keyHash);
+                
+                messageDiv.textContent = "Delete key saved successfully!";
+                messageDiv.classList.add('text-green-400');
+                
+                this.updateKeyStatus();
+                
+                // Clear input and close modal after a delay
+                input.value = '';
+                setTimeout(() => {
+                    this.hideModal();
+                    messageDiv.textContent = '';
+                    messageDiv.classList.remove('text-green-400');
+                }, 1500);
+            }
+        };
+
+        // Navigation and initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize components
+            Forum.init();
+            VoiceManager.init();
+            DeleteKeyManager.init();
+            
+            // Navigation buttons
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const pages = document.querySelectorAll('.page');
+            
+            // Page navigation buttons
+            const nextButtons = document.querySelectorAll('[data-next]');
+            const prevButtons = document.querySelectorAll('[data-prev]');
+            
+            // Floating forum button
+            const forumShortcut = document.getElementById('forum-shortcut');
+            
+            // Header forum button
+            const headerForumBtn = document.getElementById('header-forum-btn');
+            
+            // Function to change page
+            function changePage(pageId) {
+                // Hide all pages
+                pages.forEach(page => {
+                    page.classList.add('hidden');
+                    page.classList.remove('active');
+                });
+                
+                // Show selected page
+                const targetPage = document.getElementById(`${pageId}-page`);
+                if (targetPage) {
+                    targetPage.classList.remove('hidden');
+                    targetPage.classList.add('active');
+                    
+                    // Special actions for certain pages
+                    if (pageId === 'forum') {
+                        Forum.renderPosts();
+                        forumShortcut.style.display = 'none';
+                    } else {
+                        forumShortcut.style.display = 'flex';
+                    }
+                }
+                
+                // Update navigation buttons
+                navButtons.forEach(btn => {
+                    if (btn.getAttribute('data-route') === pageId) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Add click events to navigation buttons
+            navButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const route = this.getAttribute('data-route');
+                    changePage(route);
+                });
+            });
+            
+            // Add click events to next buttons
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const nextPage = this.getAttribute('data-next');
+                    changePage(nextPage);
+                });
+            });
+            
+            // Add click events to previous buttons
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const prevPage = this.getAttribute('data-prev');
+                    changePage(prevPage);
+                });
+            });
+            
+            // Add click event to floating forum button
+            forumShortcut.addEventListener('click', function() {
+                changePage('forum');
+            });
+            
+            // Add click event to header forum button
+            headerForumBtn.addEventListener('click', function() {
+                changePage('forum');
+            });
+            
+            // Add click events to all "Go to Forum" buttons
+            document.querySelectorAll('.cta-button[data-next="forum"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    changePage('forum');
+                });
+            });
+            
+            // Set home as active page
+            changePage('home');
+        });
+    </script>
+</body>
 </html>
